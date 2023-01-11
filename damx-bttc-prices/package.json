@@ -1,0 +1,17 @@
+{
+  "name": "damx-bttc-prices",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "create-local": "graph create damx-io/damx-bttc-prices --node http://127.0.0.1:8020",
+    "deploy-local": "graph deploy damx-io/damx-bttc-prices --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "remove-local": "graph remove --node http://localhost:8020/ damx-io/damx-bttc-prices",
+    "deploy-test": "graph codegen && graph deploy --product hosted-service zraccoon/damx-bttc-prices-staging --deploy-key $(cat .access_token)",
+    "deploy-prod": "graph codegen && graph deploy --product hosted-service damx-io/damx-bttc-prices"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.21.1",
+    "@graphprotocol/graph-ts": "0.20.0"
+  }
+}

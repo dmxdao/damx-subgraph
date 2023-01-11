@@ -1,0 +1,17 @@
+{
+  "name": "damx-bttc-referrals",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "create-local": "graph create damx-io/damx-bttc-referrals --node http://127.0.0.1:8020",
+    "deploy-local": "graph deploy damx-io/damx-bttc-referrals --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
+    "remove-local": "graph remove --node http://localhost:8020/ damx-io/damx-bttc-referrals",
+    "deploy-test": "graph codegen && graph deploy --product hosted-service zraccoon/damx-bttc-referrals-staging --deploy-key $(cat .access_token)",
+    "deploy-prod": "graph codegen && graph deploy --product hosted-service damx-io/damx-bttc-referrals"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.21.1",
+    "@graphprotocol/graph-ts": "0.20.0"
+  }
+}
