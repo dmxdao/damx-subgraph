@@ -1,0 +1,221 @@
+specVersion: 0.0.4
+description: Gmx Trade Chainlink Prices Subgraph
+repository: https://github.com/damx0x/damx-subgraph
+schema:
+  file: ./schema.graphql
+
+dataSources:
+  - kind: ethereum/contract
+    name: ChainlinkAggregatorBTC
+    network: fantom
+    source:
+      address: "0x472105bb154bd92580a9669ab2483864c3de9974"
+      abi: ChainlinkAggregator
+      startBlock: 56700000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkPrice
+        - CandlePrice
+      abis:
+        - name: ChainlinkAggregator
+          file: ./abis/ChainlinkAggregator.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdatedBTC
+      file: ./src/pricesMapping.ts
+
+  - kind: ethereum/contract
+    name: ChainlinkAggregatorWETH
+    network: fantom
+    source:
+      address: "0x50f8339e5668f85bcb4d8df987c12b7df4c99084"
+      abi: ChainlinkAggregator
+      startBlock: 56700000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkPrice
+        - CandlePrice
+      abis:
+        - name: ChainlinkAggregator
+          file: ./abis/ChainlinkAggregator.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdatedWETH
+      file: ./src/pricesMapping.ts
+
+  - kind: ethereum/contract
+    name: ChainlinkAggregatorWFTM
+    network: fantom
+    source:
+      address: "0xd62d2afe0196ef7a80836f74f420b7e8976f46ae"
+      abi: ChainlinkAggregator
+      startBlock: 56700000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ChainlinkPrice
+        - CandlePrice
+      abis:
+        - name: ChainlinkAggregator
+          file: ./abis/ChainlinkAggregator.json
+      eventHandlers:
+        - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+          handler: handleAnswerUpdatedWFTM
+      file: ./src/pricesMapping.ts
+
+  # - kind: ethereum/contract
+  #   name: ChainlinkAggregatorUSDC
+  #   network: fantom
+  #   source:
+  #     address: "0x9c5a8b11cee8c207753c313a566761526f2c7934"
+  #     abi: ChainlinkAggregator
+  #     startBlock: 56700000
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - ChainlinkPrice
+  #       - CandlePrice
+  #     abis:
+  #       - name: ChainlinkAggregator
+  #         file: ./abis/ChainlinkAggregator.json
+  #     eventHandlers:
+  #       - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+  #         handler: handleAnswerUpdatedUSDC
+  #     file: ./src/pricesMapping.ts
+
+  # - kind: ethereum/contract
+  #   name: ChainlinkAggregatorUSDT
+  #   network: fantom
+  #   source:
+  #     address: "0x9fe3826d53e76e877ca6124ed2997a33b25896ba"
+  #     abi: ChainlinkAggregator
+  #     startBlock: 56700000
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - ChainlinkPrice
+  #       - CandlePrice
+  #     abis:
+  #       - name: ChainlinkAggregator
+  #         file: ./abis/ChainlinkAggregator.json
+  #     eventHandlers:
+  #       - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+  #         handler: handleAnswerUpdatedUSDT
+  #     file: ./src/pricesMapping.ts
+
+  # - kind: ethereum/contract
+  #   name: ChainlinkAggregatorDAI
+  #   network: fantom
+  #   source:
+  #     address: "0x15e682ba1f3e68d507eb8d21f2d2a90ba82559ae"
+  #     abi: ChainlinkAggregator
+  #     startBlock: 56700000
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - ChainlinkPrice
+  #       - CandlePrice
+  #     abis:
+  #       - name: ChainlinkAggregator
+  #         file: ./abis/ChainlinkAggregator.json
+  #     eventHandlers:
+  #       - event: AnswerUpdated(indexed int256,indexed uint256,uint256)
+  #         handler: handleAnswerUpdatedDAI
+  #     file: ./src/pricesMapping.ts
+
+  - kind: ethereum/contract
+    name: Vault2
+    network: fantom
+    source:
+      address: "0xD093eeE7c968CEef2df96cA9949eba1a1A9b2306"
+      abi: Vault
+      startBlock: 57687077
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Volume
+      abis:
+        - name: Vault
+          file: ./abis/VaultV2.json
+      eventHandlers:
+        - event: BuyUSDG(address,address,uint256,uint256,uint256)
+          handler: handleBuyUSDG
+        - event: SellUSDG(address,address,uint256,uint256,uint256)
+          handler: handleSellUSDG
+        - event: Swap(address,address,address,uint256,uint256,uint256,uint256)
+          handler: handleSwap
+        - event: IncreasePosition(bytes32,address,address,address,uint256,uint256,bool,uint256,uint256)
+          handler: handleIncreasePosition
+        - event: DecreasePosition(bytes32,address,address,address,uint256,uint256,bool,uint256,uint256)
+          handler: handleDecreasePosition
+        # - event: ClosePosition(bytes32,uint256,uint256,uint256,uint256,uint256,int256)
+        #   handler: handleClosePosition
+        - event: LiquidatePosition(bytes32,address,address,address,bool,uint256,uint256,uint256,int256,uint256)
+          handler: handleLiquidatePosition
+      file: ./src/vaultMapping.ts
+
+  - kind: ethereum/contract
+    name: GlpManager
+    network: fantom
+    source:
+      address: "0xd2b6784b8302D0705a90B720d18E16362EFbda76"
+      abi: GlpManager
+      startBlock: 57687138
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - UserTVL
+      abis:
+        - name: GlpManager
+          file: ./abis/GlpManager.json
+      eventHandlers:
+        - event: AddLiquidity(address,address,uint256,uint256,uint256,uint256,uint256)
+          handler: handleAddLiquidity
+        - event: RemoveLiquidity(address,address,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRemoveLiquidity
+      file: ./src/userMapping.ts
+
+  - kind: ethereum/contract
+    name: Vault
+    network: fantom
+    source:
+      address: "0xD093eeE7c968CEef2df96cA9949eba1a1A9b2306"
+      abi: Vault
+      startBlock: 57687077
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - UserVolume
+      abis:
+        - name: Vault
+          file: ./abis/VaultV2.json
+      eventHandlers:
+        - event: Swap(address,address,address,uint256,uint256,uint256,uint256)
+          handler: handleSwap
+        - event: IncreasePosition(bytes32,address,address,address,uint256,uint256,bool,uint256,uint256)
+          handler: handleIncreasePosition
+        - event: DecreasePosition(bytes32,address,address,address,uint256,uint256,bool,uint256,uint256)
+          handler: handleDecreasePosition
+        - event: LiquidatePosition(bytes32,address,address,address,bool,uint256,uint256,uint256,int256,uint256)
+          handler: handleLiquidatePosition
+      file: ./src/userMapping.ts
